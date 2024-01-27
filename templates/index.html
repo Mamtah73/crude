@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block body %}
+{% load static %}
+   
+
+    
+      <div class="container">
+        <table class="table table-hover">
+            <thead class="mamtaaa">
+              <tr>
+                <th scope="col" class="mamta1">sn</th>
+                <th scope="col" class="mamta1">name</th>
+                <th scope="col" class="mamta1">email</th>
+                <th scope="col" class="mamta1">phone</th>
+                <th scope="col" class="mamta1">address</th>
+                <th scope="col" class="mamta1">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for i in studentlist  %}
+              <tr>
+                <td>{{i.id}}</td>
+                <td>{{i.name}}</td>
+                <td>{{i.email}}</td>
+                <td>{{i.phone}}</td>
+                <td>{{i.address}}</td>
+                <td>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#editmamta-{{forloop.counter}}">
+                    Edit 
+                   </button>
+                </td>
+              </tr>
+              {% endfor %}
+            
+            </tbody>
+          </table>
+      </div>
+
+      <!-- Button trigger modal -->
+
+  
+  <!-- Modal add new student --> 
+  <div class="modal fade" id="newaddmodel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Student</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method='POST' action='{% url "addnew" %}'>
+              {% csrf_token %}
+
+
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Name</label>
+                    <input type="text" name="name" class="form-control" id="exampleInputPassword1">
+                  </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">phone</label>
+                    <input type="text" name="phone" class="form-control" id="exampleInputPassword1">
+                  </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">address</label>
+                  <input type="text" name="address" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Add new</button>
+                  </div>
+               
+              </form>
+        </div>
+
+       
+      </div>
+    </div>
+  </div>
+   <!-- Modal end new student --> 
+  <!-- update trigger modal -->
+
+  
+  <!-- Modal -->
+  {% for i in editstudent  %}
+  <div class="modal fade" id="editmamta-{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">update student</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" action="/update/ {{i.id}}">
+              {% csrf_token %}
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Name</label>
+                    <input type="text" value="{{i.name}}" name="name" class="form-control" id="exampleInputPassword1">
+                  </div>
+                <div class="form-group">
+                  <label for="exampleInputEmail1">Email address</label>
+                  <input type="email" value="{{i.email}}" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">phone</label>
+                    <input type="text" value="{{i.phone}}" name="phone" class="form-control" id="exampleInputPassword1">
+                  </div>
+                <div class="form-group">
+                  <label for="exampleInputPassword1">address</label>
+                  <input type="text" value="{{i.address}}" name="address" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">update</button>
+                  </div>
+               
+              </form>
+        </div>
+       
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+    
+  {% endblock body %}
